@@ -1,0 +1,20 @@
+Série de 100 corridas (semente 42, sem benefícios)
+  Vitórias exclusivas de Azul: 36 (36.0%)
+  Vitórias exclusivas de Vermelho: 22 (22.0%)
+  Vitórias exclusivas de Verde: 33 (33.0%)
+  Empates: 9 (9.0%)
+  Média de rodadas: 11.59
+
+Série de 1000 corridas (semente 42, sem benefícios)
+  Vitórias exclusivas de Azul: 307 (30.7%)
+  Vitórias exclusivas de Vermelho: 280 (28.0%)
+  Vitórias exclusivas de Verde: 293 (29.3%)
+  Empates: 120 (12.0%)
+  Média de rodadas: 11.63
+
+Série de 10000 corridas (semente 42, sem benefícios)
+  Vitórias exclusivas de Azul: 2875 (28.8%)
+  Vitórias exclusivas de Vermelho: 3028 (30.3%)
+  Vitórias exclusivas de Verde: 2973 (29.7%)
+  Empates: 1124 (11.2%)
+  Média de rodadas: 11.75
