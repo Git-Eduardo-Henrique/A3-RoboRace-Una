@@ -64,17 +64,17 @@ def menuEmJogo(jogador=1):
         robo_rival1 = robos.Robo(cor="vermelho", posicao=0)
         robo_rival2 = robos.Robo(cor="azul", posicao=0)
 
-    while emJogo:
-        opc = -1 
+    jogo.iniciarRodada(robo_jogador, robo_rival1, robo_rival2)
 
-        linha()
+    while emJogo:
+        opc = -1
 
         linha()
         print(f"Jogo em {adicionarCor("andamento!", 4)} Digite uma opção")
         print(f"{adicionarCor("0 - Fechar jogo", 1)}")
         print(f"1 - {adicionarCor("Avançar rodada", 4)}")
-        print(f"2 - {adicionarCor("Loja de créditos", 4)}")
-        print(f"3 - {adicionarCor("Desafios", 4)}")
+        print(f"2 - {adicionarCor("Loja de créditos", 7)}")
+        print(f"3 - {adicionarCor("Desafios", 7)}")
         linha()
 
         while opc < 0 or opc > 3:
