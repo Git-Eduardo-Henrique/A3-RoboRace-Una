@@ -73,8 +73,8 @@ def menuEmJogo(jogador=1):
         print(f"Jogo em {adicionarCor("andamento!", 4)} Digite uma opção")
         print(f"{adicionarCor("0 - Fechar jogo", 1)}")
         print(f"1 - {adicionarCor("Avançar rodada", 4)}")
-        print(f"2 - {adicionarCor("Loja de créditos", 7)}")
-        print(f"3 - {adicionarCor("Desafios", 7)}")
+        print(f"2 - {adicionarCor("Loja de créditos - não disponível", 7)}")
+        print(f"3 - {adicionarCor("Desafios - não disponível", 7)}")
         linha()
 
         while opc < 0 or opc > 3:

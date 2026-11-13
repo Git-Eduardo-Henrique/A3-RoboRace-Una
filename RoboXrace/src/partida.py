@@ -3,12 +3,12 @@ from random import randint
 
 class Jogo:
     def __init__(self):
-        self.rodada = 0
+        self.rodada = -1
 
     def iniciarRodada(self, jogador, robo1, robo2):
         self.rodada += 1
 
-        if self.rodada == 1:
+        if self.rodada == 0:
             jogador.posicao = 0
             robo1.posicao = 0
             robo2.posicao = 0
@@ -17,31 +17,31 @@ class Jogo:
             novo_movimento2 = [0, "inicio"]
             novo_movimento3 = [0, "inicio"]
         else:
-            novo_movimento1 = self.sortearMovimento()
-            novo_movimento2 = self.sortearMovimento()
-            novo_movimento3 = self.sortearMovimento()
-            jogador.posicao += novo_movimento1[0]
-            robo1.posicao += novo_movimento2[0]
-            robo2.posicao += novo_movimento3[0]
+            novo_movimento1 = self.sortearMovimento(robo=jogador)
+            novo_movimento2 = self.sortearMovimento(robo=robo1)
+            novo_movimento3 = self.sortearMovimento(robo=robo2)
 
-        msg1 = self.mostrarPosicao(jogador, novo_movimento1[0], novo_movimento1[1])
-        msg2 = self.mostrarPosicao(robo1, novo_movimento2[0], novo_movimento2[1])
-        msg3 = self.mostrarPosicao(robo2, novo_movimento3[0], novo_movimento3[1])
+        msg1 = self.gerarPista(jogador, novo_movimento1[0], novo_movimento1[1])
+        msg2 = self.gerarPista(robo1, novo_movimento2[0], novo_movimento2[1])
+        msg3 = self.gerarPista(robo2, novo_movimento3[0], novo_movimento3[1])
 
         menus.linha()
+        print(f"RODADA: {self.rodada}")
         print(msg1)
         print(msg2)
         print(msg3)
 
-    def sortearMovimento(self): # sorteia o próxima movimento
+    def sortearMovimento(self, robo): # sorteia o próxima movimento
         chance = randint(0, 100)
         tipo = ""
 
         if chance <= 50: # MOVIMENTO BÁSICO ( 1 A 3 )
             movimento = randint(1, 3)
+            robo.posicao += movimento
             tipo = "basico"
         elif chance > 50 and chance <= 65: # TURBO ( MOVIMENTO BÁSICO + 3 DE BONUS )
             movimento = randint(1, 3) + 3
+            robo.posicao += movimento
             tipo = "turbo"
         elif chance > 65 and chance <= 75: # PANE ( SEM MOVIMENTO )
             movimento = 0
@@ -50,20 +50,28 @@ class Jogo:
             movimento = randint(1, 3) - 2
             if movimento < 0:
                 movimento = 0
+
+            robo.posicao += movimento
             tipo = "oleo"
         elif chance > 85 and chance <= 95: # BURACO ( MOVIMENTO BÁSICO - 3 / SEMPRE 0)
-            movimento = -3
+            if (robo.posicao - 3) <= 0:
+                movimento = "ao final da pista"
+                robo.posicao = 0
+            else:
+                movimento = -3
+                robo.posicao += movimento
             tipo = "buraco"
         elif chance > 95: # SUPER TURBO ( MOVIMENTO BÁSICO + 6 DE BONUS )
             movimento = randint(1, 3) + 6
+            robo.posicao += movimento
             tipo = "superturbo"
 
         return [movimento, tipo]
 
-    def mostrarPosicao(self, jogador, movimento, tipo): # mostra a pista e posição do robo nela
+    def gerarPista(self, jogador, movimento, tipo): # mostra a pista e posição do robo nela
         pista = []
 
-        for casa in range(0, 30):
+        for casa in range(0, 31):
             if casa == jogador.posicao:
                 if jogador.cor == "azul":
                     pista.append("\033[44m🤖\033[m")
@@ -72,9 +80,9 @@ class Jogo:
                 elif jogador.cor == "verde":
                     pista.append("\033[42m🤖\033[m")
             else:
-                pista.append("-")
+                pista.append(str(casa))
 
-        print("".join(pista))
+        self.mostrarPista(pista=pista)
 
         if tipo == "inicio":
             return f"Partida iniciada!! robo {jogador.cor} inicia na posição {movimento}"
@@ -87,7 +95,12 @@ class Jogo:
         elif tipo == "oleo":
             return f"robo {jogador.cor} encontrou oleo na pista.. movimentou apenas {movimento} posições"
         elif tipo == "buraco":
-            return f"robo {jogador.cor} encontrou um buraco na pista.. {movimento} posições"
+            return f"robo {jogador.cor} encontrou um buraco na pista.. voltou {movimento}"
         elif tipo == "superturbo":
             return f"robo {jogador.cor} ativou o SUPER TURBO!!!! e movimentou {movimento} posições"
-        
+
+    def mostrarPista(self, pista):
+        for casa in pista:
+            print(casa, end=" ")
+
+        print()
