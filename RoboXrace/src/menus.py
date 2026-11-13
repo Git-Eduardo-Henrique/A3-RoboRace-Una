@@ -85,7 +85,23 @@ def menuEmJogo(jogador=1):
         if opc == 0:
             emJogo = False
         elif opc == 1:
-            jogo.iniciarRodada(robo_jogador, robo_rival1, robo_rival2)
+            emJogo = jogo.iniciarRodada(robo_jogador, robo_rival1, robo_rival2)
+        elif opc == 2:
+            pass
+        elif opc == 3:
+            pass
+
+def fimDeJogo(cor_vencedor, rodada, cor_jogador):
+    linha()
+
+    if cor_jogador == cor_vencedor:
+        print(f"Parabens!! seu robo escolhido, robo {cor_vencedor} chegou a linha de chegada em:")
+        print(f"{rodada} Rodadas!")
+    else:
+        print(f"Você perdeu.. o robo {cor_vencedor} chegou a linha de chegada em:")
+        print(f"{rodada} Rodadas!")
+
+    linha()
 
 if __name__ == "__main__":
     print("modulo Menus iniciado! para iniciar o jogo execute o arquivo MAIN.PY")

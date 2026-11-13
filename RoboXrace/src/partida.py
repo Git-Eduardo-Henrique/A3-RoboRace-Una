@@ -31,6 +31,18 @@ class Jogo:
         print(msg2)
         print(msg3)
 
+        if jogador.posicao > 30:
+            menus.fimDeJogo(cor_jogador=jogador.cor, rodada=self.rodada, cor_vencedor=jogador.cor)
+            return False
+        elif robo1.posicao > 30:
+            menus.fimDeJogo(cor_jogador=jogador.cor, rodada=self.rodada, cor_vencedor=robo1.cor)
+            return False
+        elif robo2.posicao > 30:
+            menus.fimDeJogo(cor_jogador=jogador.cor, rodada=self.rodada, cor_vencedor=robo2.cor)
+            return False
+        
+        return True
+
     def sortearMovimento(self, robo): # sorteia o próxima movimento
         chance = randint(0, 100)
         tipo = ""
@@ -71,6 +83,13 @@ class Jogo:
     def gerarPista(self, jogador, movimento, tipo): # mostra a pista e posição do robo nela
         pista = []
 
+        if jogador.cor == "vermelho":
+            cor_robo = 1
+        elif jogador.cor == "verde":
+            cor_robo = 2
+        else:
+            cor_robo = 4
+
         for casa in range(0, 31):
             if casa == jogador.posicao:
                 if jogador.cor == "azul":
@@ -85,22 +104,25 @@ class Jogo:
         self.mostrarPista(pista=pista)
 
         if tipo == "inicio":
-            return f"Partida iniciada!! robo {jogador.cor} inicia na posição {movimento}"
+            return f"Partida iniciada!! robo {menus.adicionarCor(jogador.cor, cor_robo)} inicia na posição {menus.adicionarCor(movimento, cor_robo)}"
         elif tipo == "basico":
-            return f"robo {jogador.cor} movimentou {movimento} posições"
+            return f"robo {menus.adicionarCor(jogador.cor, cor_robo)} movimentou {menus.adicionarCor(movimento, cor_robo)} posições"
         elif tipo == "turbo":
-            return f"robo {jogador.cor} ativou o turbo!! e movimentou {movimento} posições"
+            return f"robo {menus.adicionarCor(jogador.cor, cor_robo)} ativou o {menus.adicionarCor("turbo!!", cor_robo)} e movimentou {menus.adicionarCor(movimento, cor_robo)} posições"
         elif tipo == "pane":
-            return f"robo {jogador.cor} sofreu pane na pista.. {movimento} movimentos"
+            return f"robo {menus.adicionarCor(jogador.cor, cor_robo)} sofreu {menus.adicionarCor("pane na pista", cor_robo)}.. {menus.adicionarCor(movimento, cor_robo)} movimentos"
         elif tipo == "oleo":
-            return f"robo {jogador.cor} encontrou oleo na pista.. movimentou apenas {movimento} posições"
+            return f"robo {menus.adicionarCor(jogador.cor, cor_robo)} encontrou {menus.adicionarCor("oleo na pista", cor_robo)}.. movimentou apenas {menus.adicionarCor(movimento, cor_robo)} posições"
         elif tipo == "buraco":
-            return f"robo {jogador.cor} encontrou um buraco na pista.. voltou {movimento}"
+            return f"robo {menus.adicionarCor(jogador.cor, cor_robo)} encontrou um {menus.adicionarCor("buraco na pista", cor_robo)}.. voltou {menus.adicionarCor(movimento, cor_robo)}"
         elif tipo == "superturbo":
-            return f"robo {jogador.cor} ativou o SUPER TURBO!!!! e movimentou {movimento} posições"
+            return f"robo {menus.adicionarCor(jogador.cor, cor_robo)} ativou o {menus.adicionarCor("SUPER TURBO!!!!", cor_robo)} e movimentou {menus.adicionarCor(movimento, cor_robo)} posições"
 
     def mostrarPista(self, pista):
         for casa in pista:
             print(casa, end=" ")
 
         print()
+
+if __name__ == "__main__":
+    print("modulo Partida iniciado! para iniciar o jogo execute o arquivo MAIN.PY")
