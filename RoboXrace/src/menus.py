@@ -50,19 +50,19 @@ def menuEmJogo(jogador=1):
 
     if jogador == 1:
         print(f"você escolheu o {adicionarCor("Robo azul", 4)}")
-        robo_jogador = robos.Robo(cor="azul", posicao=0)
-        robo_rival1 = robos.Robo(cor="vermelho", posicao=0)
-        robo_rival2 = robos.Robo(cor="verde", posicao=0)
+        robo_jogador = robos.Robo(cor="azul", posicao=0, creditos=0)
+        robo_rival1 = robos.Robo(cor="vermelho", posicao=0, creditos=0)
+        robo_rival2 = robos.Robo(cor="verde", posicao=0, creditos=0)
     elif jogador == 2:
         print(f"você escolheu o {adicionarCor("Robo vermelho", 1)}")
-        robo_jogador = robos.Robo(cor="vermelho", posicao=0)
-        robo_rival1 = robos.Robo(cor="azul", posicao=0)
-        robo_rival2 = robos.Robo(cor="verde", posicao=0)
+        robo_jogador = robos.Robo(cor="vermelho", posicao=0, creditos=0)
+        robo_rival1 = robos.Robo(cor="azul", posicao=0, creditos=0)
+        robo_rival2 = robos.Robo(cor="verde", posicao=0, creditos=0)
     else:
         print(f"você escolheu o {adicionarCor("Robo verde", 2)}")
-        robo_jogador = robos.Robo(cor="verde", posicao=0)
-        robo_rival1 = robos.Robo(cor="vermelho", posicao=0)
-        robo_rival2 = robos.Robo(cor="azul", posicao=0)
+        robo_jogador = robos.Robo(cor="verde", posicao=0, creditos=0)
+        robo_rival1 = robos.Robo(cor="vermelho", posicao=0, creditos=0)
+        robo_rival2 = robos.Robo(cor="azul", posicao=0, creditos=0)
 
     jogo.iniciarRodada(robo_jogador, robo_rival1, robo_rival2)
 
@@ -73,9 +73,11 @@ def menuEmJogo(jogador=1):
         print(f"Jogo em {adicionarCor("andamento!", 4)} Digite uma opção")
         print(f"{adicionarCor("0 - Fechar jogo", 1)}")
         print(f"1 - {adicionarCor("Avançar rodada", 4)}")
-        print(f"2 - {adicionarCor("Loja de créditos - não disponível", 7)}")
-        print(f"3 - {adicionarCor("Desafios - não disponível", 7)}")
+        print(f"2 - {adicionarCor("Loja de créditos", 5)}")
+        print(f"3 - {adicionarCor("Desafios ( +creditos )", 6)}")
         linha()
+        print(f"Seus créditos: {adicionarCor(robo_jogador.creditos, 4)}")
+        linha()        
 
         while opc < 0 or opc > 3:
                 opc = int(input(f"Sua opção {adicionarCor("( apenas de 0 a 3 )", 4)}: "))
@@ -87,9 +89,11 @@ def menuEmJogo(jogador=1):
         elif opc == 1:
             emJogo = jogo.iniciarRodada(robo_jogador, robo_rival1, robo_rival2)
         elif opc == 2:
-            pass
+            lojaCreditos(robo_jogador)
+            emJogo = jogo.iniciarRodada(robo_jogador, robo_rival1, robo_rival2)
         elif opc == 3:
-            pass
+            robo_jogador.creditos += 3
+            emJogo = menuDesafios()
 
 def fimDeJogo(cor_vencedor, rodada, cor_jogador):
     linha()
@@ -102,6 +106,33 @@ def fimDeJogo(cor_vencedor, rodada, cor_jogador):
         print(f"{rodada} Rodadas!")
 
     linha()
+
+def lojaCreditos(jogador, robo1, robo2, jogo):
+    opc = -1
+    limpar()
+    linha()
+    print(f"- Loja de créditos -")
+    print(f"0 - Avançar ( rodada normal )")
+    print(f"1 - Turbo ( 2 créditos )")
+    print(f"2 - Escudo ( 1 créditos )")
+    linha()
+    print(f"Seus créditos: {adicionarCor(jogador.creditos, 4)}")
+    linha()
+
+    while opc < 0 or opc > 2:
+        opc = int(input(f"Sua opção {adicionarCor("( apenas de 0 a 2 )", 4)}: "))
+
+    limpar()
+
+    if opc == 0:
+        jogo.iniciarRodada(jogador, robo1, robo2)
+    elif opc == 1:
+        jogo.recompensa(jogador, robo1, robo2, "compra_turbo")
+    elif opc == 2:
+        jogo.recompensa(jogador, robo1, robo2, "escudo")
+
+def menuDesafios():
+    return True
 
 if __name__ == "__main__":
     print("modulo Menus iniciado! para iniciar o jogo execute o arquivo MAIN.PY")
